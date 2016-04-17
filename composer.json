@@ -1,0 +1,22 @@
+{
+    "name": "kulekci/php-akbank-api",
+    "require": {
+        "guzzlehttp/guzzle": "^6.2"
+    },
+    "authors": [
+        {
+            "name": "Haydar KULEKCI",
+            "email": "haydarkulekci@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "AkbankAPI\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "AppTest\\": "tests/"
+        }
+    }
+}

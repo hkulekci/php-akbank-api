@@ -18,16 +18,27 @@ class Response
      */
     public function __construct($rawData)
     {
-        if (is_string()) {
+        if (is_string($rawData)) {
             $rawData = json_decode($rawData, true);
         }
 
+        // For Message
         if (isset($rawData['returnMsg'])) {
             $this->returnMsg = $rawData['returnMsg'];
         }
+        if (isset($rawData['resultMessage'])) {
+            $this->returnMsg = $rawData['resultMessage'];
+        }
+
+        // For Code
         if (isset($rawData['returnCode'])) {
             $this->returnCode = $rawData['returnCode'];
         }
+        if (isset($rawData['resultCode'])) {
+            $this->returnCode = $rawData['resultCode'];
+        }
+
+        // For Data
         if (isset($rawData['data'])) {
             $this->data = $rawData['data'];
         }
@@ -38,7 +49,7 @@ class Response
      */
     public function isOk()
     {
-        return $this->returnCode == 'API-00000';
+        return $this->returnCode == 'API-00000' || $this->returnCode == '00' || $this->returnCode == '';
     }
 
     /**
@@ -46,7 +57,7 @@ class Response
      */
     public function getReturnCode()
     {
-        $this->returnCode;
+        return $this->returnCode;
     }
 
     /**
@@ -54,7 +65,7 @@ class Response
      */
     public function getReturnMessage()
     {
-        $this->returnMsg;
+        return $this->returnMsg;
     }
 
     /**

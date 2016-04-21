@@ -9,7 +9,6 @@
 namespace AkbankAPI\Endpoints;
 
 use AkbankAPI\Requestable;
-use GuzzleHttp\Client;
 
 class CreditInterestRates implements Requestable
 {
@@ -17,8 +16,8 @@ class CreditInterestRates implements Requestable
     const CREDIT_TYPE_MORTGAGE_LOAN = 'K';
     const CREDIT_TYPE_CAR_LOAN      = 'T';
 
-    protected $path       = 'creditInterestRates';
-    protected $creditType = null;
+    protected $path = 'creditInterestRates';
+    protected $creditType;
 
     public function __construct($creditType)
     {
@@ -41,9 +40,9 @@ class CreditInterestRates implements Requestable
         ];
     }
 
-    public function getPostData()
+    public function getRawData()
     {
-        return [];
+        return "";
     }
 
     public static function getAvailableCreditTypes()

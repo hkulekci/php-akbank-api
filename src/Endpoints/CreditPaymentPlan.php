@@ -9,20 +9,19 @@
 namespace AkbankAPI\Endpoints;
 
 use AkbankAPI\Requestable;
-use GuzzleHttp\Client;
 
 class CreditPaymentPlan implements Requestable
 {
-    protected $path       = 'creditPaymentPlan';
+    protected $path = 'creditPaymentPlan';
 
-    protected $bsmv          = null;
-    protected $interest      = null;
-    protected $kkdf          = null;
-    protected $loanStartDate = null;
-    protected $loanUsingDate = null;
-    protected $loanAmount    = null;
-    protected $expenseAmount = null;
-    protected $term          = null;
+    protected $bsmv;
+    protected $interest;
+    protected $kkdf;
+    protected $loanStartDate;
+    protected $loanUsingDate;
+    protected $loanAmount;
+    protected $expenseAmount;
+    protected $term;
 
     public function __construct(
         $bsmv,
@@ -49,9 +48,9 @@ class CreditPaymentPlan implements Requestable
         return $this->path;
     }
 
-    public function getPostData()
+    public function getRawData()
     {
-        return [
+        return json_encode([
             'bsmv'          => $this->bsmv,
             'interest'      => $this->interest,
             'kkdf'          => $this->kkdf,
@@ -60,7 +59,7 @@ class CreditPaymentPlan implements Requestable
             'loanAmount'    => $this->loanAmount,
             'expenseAmount' => $this->expenseAmount,
             'term'          => $this->term,
-        ];
+        ]);
     }
 
     public function getQueryParameters()

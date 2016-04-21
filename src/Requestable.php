@@ -9,7 +9,18 @@ namespace AkbankAPI;
 
 interface Requestable
 {
+    /**
+     * @return string
+     */
     public function getPath();
+    
+    /**
+     * @return array
+     */
     public function getQueryParameters();
-    public function getPostData();
+
+    /**
+     * @return string
+     */
+    public function getRawData();
 }

@@ -9,6 +9,11 @@ namespace AkbankAPI;
 
 use AkbankAPI\Endpoints\CreditInterestRates;
 use AkbankAPI\Endpoints\CreditPaymentPlan;
+use AkbankAPI\Endpoints\ExchangeRatesService;
+use AkbankAPI\Endpoints\FindATMService;
+use AkbankAPI\Endpoints\FindBranchService;
+use AkbankAPI\Endpoints\FundPricesService;
+use AkbankAPI\Endpoints\StockValues;
 use GuzzleHttp\Client as GuzzleClient;
 
 class Client
@@ -22,12 +27,12 @@ class Client
             'base_uri' => $url,
             'timeout'  => 2.0,
         ]);
-        $this->headers[] = ['Content-Type' => 'application/json'];
+        $this->headers['Content-Type'] = 'application/json';
     }
 
     public function setApiKey($apiKey)
     {
-        $this->headers[] = ['apikey' => $apiKey];
+        $this->headers['apikey'] = $apiKey;
     }
 
     /**
@@ -38,13 +43,17 @@ class Client
     {
         $options         = [];
         $queryParameters = $endpoint->getQueryParameters();
-        if ($queryParameters) {
+        if (!empty($queryParameters)) {
             $options['query'] = $queryParameters;
         }
 
-        $postData = $endpoint->getPostData();
-        if ($postData) {
-            $options['form_params'] = $postData;
+        $postData = $endpoint->getRawData();
+        if (!empty($postData)) {
+            $options['body'] = $postData;
+        }
+
+        if (!empty($this->headers)) {
+            $options['headers'] = $this->headers;
         }
 
         $response = $this->client->request(
@@ -69,7 +78,6 @@ class Client
     }
 
     /**
-     * @param  string  $creditType
      * @return array
      */
     public function getCreditPaymentPlan(
@@ -94,5 +102,52 @@ class Client
         );
 
         return $this->makeRequest('POST', $endpoint);
+    }
+
+    public function getExchangeRatesService($date = null, $currencyCode = null)
+    {
+        $endpoint = new ExchangeRatesService($date, $currencyCode);
+
+        return $this->makeRequest('GET', $endpoint);
+    }
+
+    public function getFindATMService(
+        $latitude,
+        $longitude,
+        $radius,
+        $city = null,
+        $district = null,
+        $searchText = null
+    ) {
+        $endpoint = new FindATMService($latitude, $longitude, $radius, $city, $district, $searchText);
+
+        return $this->makeRequest('POST', $endpoint);
+    }
+
+    public function getFindBranchService(
+        $latitude,
+        $longitude,
+        $radius,
+        $city = null,
+        $district = null,
+        $searchText = null
+    ) {
+        $endpoint = new FindBranchService($latitude, $longitude, $radius, $city, $district, $searchText);
+
+        return $this->makeRequest('POST', $endpoint);
+    }
+
+    public function getFundPricesService($fundType)
+    {
+        $endpoint = new FundPricesService($fundType);
+
+        return $this->makeRequest('GET', $endpoint);
+    }
+
+    public function getStockValues($symbol)
+    {
+        $endpoint = new StockValues($symbol);
+
+        return $this->makeRequest('GET', $endpoint);
     }
 }

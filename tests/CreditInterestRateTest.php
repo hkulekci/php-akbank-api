@@ -4,14 +4,14 @@ namespace tests;
 class CreditInterestRateTest extends \PHPUnit_Framework_TestCase
 {
     protected $apiClient;
-    
+
     protected function setUp()
     {
-        if (!isset($_ENV['apikey'])) {
+        if (!getenv('apikey')) {
             $this->fail('ApiKey is required at $_ENV');
         }
         $this->apiClient = new \AkbankAPI\Client('https://apigate.akbank.com/api/mock/');
-        $this->apiClient->setApikey($_ENV['apikey']);
+        $this->apiClient->setApikey(getenv('apikey'));
     }
 
     public function testResponse()

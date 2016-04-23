@@ -4,10 +4,10 @@ php:
     - 7.0
     - hhvm
 before_script:
+    - sudo apt-get -y update
     - sudo apt-get -y remove libcurl4-gnutls-dev
     - sudo apt-get -y install libcurl4-openssl-dev
-    - sudo apt-get -y update
-    - sudo apt-get -y update php-curl
+    - sudo apt-get install curl libcurl4-openssl libcurl4-openssl-dev php5-curl
     - composer self-update
     - curl -s http://getcomposer.org/installer | php
     - composer install --prefer-source --no-interaction --dev

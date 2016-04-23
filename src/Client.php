@@ -24,8 +24,11 @@ class Client
     public function __construct($url = 'https://apigate.akbank.com.tr/api')
     {
         $this->client = new GuzzleClient([
-            'base_uri' => $url,
-            'timeout'  => 2.0,
+            'base_uri'     => $url,
+            'timeout'      => 10.0,
+            'curl.options' => array(
+                'CURLOPT_SSLVERSION' => 1,
+            )
         ]);
         $this->headers['Content-Type'] = 'application/json';
     }

@@ -27,7 +27,7 @@ class Client
             'base_uri'     => $url,
             'timeout'      => 10.0,
             'curl.options' => array(
-                'CURLOPT_SSLVERSION' => 1,
+                'CURLOPT_SSLVERSION' => 0, // default
             )
         ]);
         $this->headers['Content-Type'] = 'application/json';

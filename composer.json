@@ -1,5 +1,5 @@
 {
-    "name": "kulekci/php-akbank-api",
+    "name": "hkulekci/php-akbank-api",
     "require": {
         "guzzlehttp/guzzle": "^6.2"
     },
